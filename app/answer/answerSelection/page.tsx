@@ -31,7 +31,12 @@ export default function AnswerSelection() {
       <SearchBar />
       {data ? (
         <>
-          <ViewQuestion question={data?.question} isMyQuestion={true} />
+          <ViewQuestion
+            question={data?.question}
+            isMyQuestion={true}
+            onAnswerAdded={() => {}}
+            answerCount={data.answers.length}
+          />
           <ViewAnswer
             answers={data.answers}
             isMyQuestion={true}

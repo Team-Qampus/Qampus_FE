@@ -22,10 +22,11 @@ export type answerDetailType = {
   user_id: number;
   content: string;
   created_date: string;
-  like_count: number;
+  likeCnt: number;
   isChosen: boolean;
   imageUrls?: string[];
   universityName: string;
+  userName?: string;
 };
 
 export type questionDetailType = {

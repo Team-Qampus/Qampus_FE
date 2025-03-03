@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {deleteCurious, setCurious} from '@/app/apis/curiousApi';
 import {questionDetailType} from '@/type';
 import Image from 'next/image';
@@ -9,9 +10,14 @@ import {useRouter} from 'next/navigation';
 export default function ViewQuestion({
   question,
   isMyQuestion,
+  onAnswerAdded,
+  answerCount,
 }: {
   question: questionDetailType;
   isMyQuestion: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onAnswerAdded: (newAnswer: any) => void;
+  answerCount: number;
 }) {
   const [imCurious, setImCurious] = useState(question.curious);
   const router = useRouter();
@@ -86,7 +92,7 @@ export default function ViewQuestion({
             </button>
           )}
           <p className="text-xs md:text-sm text-[#606060]">
-            답변 {question.answer_cnt ?? 0}개 · {getKSTTimeAgo(createdDate)}
+            답변 {answerCount}개 · {getKSTTimeAgo(createdDate)}
           </p>
         </div>
       </div>

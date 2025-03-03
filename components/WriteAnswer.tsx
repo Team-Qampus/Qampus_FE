@@ -5,11 +5,17 @@ import Image from 'next/image';
 import {useState, useCallback} from 'react';
 import {setAnswer} from '@/app/apis/answerApi';
 import {debounce} from 'lodash';
-import {useParams, useRouter} from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import {getCookie} from '@/utils/cookie';
 
-export default function WriteAnswer() {
-  const {questionId} = useParams<{questionId: string}>();
+export default function WriteAnswer({
+  questionId,
+  onAnswerAdded,
+}: {
+  questionId: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onAnswerAdded: (newAnswer: any) => void;
+}) {
   const [content, setContent] = useState('');
   const [images, setImages] = useState<File[]>([]);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
@@ -37,7 +43,7 @@ export default function WriteAnswer() {
 
       const response = await setAnswer({
         userId: info.userId,
-        questionId: parseInt(questionId),
+        questionId,
         content,
         images,
       });
@@ -47,6 +53,8 @@ export default function WriteAnswer() {
       setContent('');
       setImages([]);
       setIsButtonEnabled(false);
+
+      onAnswerAdded(response);
 
       window.location.reload();
     } catch (e) {

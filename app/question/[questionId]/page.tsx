@@ -16,6 +16,7 @@ export default function QuestionDetailPage() {
   const [datas, setDatas] = useState<ViewQuestionProps>();
   const [isMyQuestion, setIsMyQuestion] = useState<boolean>(false);
   const [answering, setAnswering] = useState<boolean>(false);
+  const [answerCount, setAnswerCount] = useState<number>(0);
 
   useEffect(() => {
     if (questionId) getData(parseInt(questionId));
@@ -35,13 +36,35 @@ export default function QuestionDetailPage() {
       question: response,
       answers: response.answers || [],
     });
+
+    setAnswerCount(response.answers.length);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleAnswerAdded = (newAnswer: any) => {
+    if (datas) {
+      setDatas({
+        ...datas,
+        question: {
+          ...datas.question,
+          answer_cnt: (datas.question.answer_cnt ?? 0) + 1,
+        },
+        answers: [...datas.answers, newAnswer],
+      });
+      setAnswerCount(prevCount => prevCount + 1);
+    }
   };
 
   return (
     <main className="flex w-full min-h-screen bg-white flex-col items-center">
       <SearchBar />
       {datas?.question && (
-        <ViewQuestion question={datas.question} isMyQuestion={isMyQuestion} />
+        <ViewQuestion
+          question={datas.question}
+          isMyQuestion={isMyQuestion}
+          onAnswerAdded={handleAnswerAdded}
+          answerCount={answerCount}
+        />
       )}
       {datas?.answers && (
         <ViewAnswer
@@ -59,11 +82,14 @@ export default function QuestionDetailPage() {
             추가 질문하기
           </Link>
         ) : answering ? (
-          <WriteAnswer />
+          <WriteAnswer
+            questionId={parseInt(questionId)}
+            onAnswerAdded={handleAnswerAdded}
+          />
         ) : (
           <button
             onClick={() => setAnswering(true)}
-            className="bg-main mb-[5vw] text-white w-[50.6vw] rounded-[1vw] text-[1 document.cookie = 'info=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';4vw] flex justify-center items-center aspect-[973/85]"
+            className="bg-main mb-[5vw] text-white w-[50.6vw] rounded-[1vw] text-[1.4vw] flex justify-center items-center aspect-[973/85]"
           >
             답변하기
           </button>
