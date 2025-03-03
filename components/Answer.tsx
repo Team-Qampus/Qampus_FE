@@ -29,7 +29,7 @@ export default function Answer({
     else setThumbsUP(answer.answerId);
   };
 
-  const createdDate = convertCreatedDate(answer.created_date);
+  const createdDate = convertCreatedDate(answer.createdDate);
 
   return (
     <div className="bg-white rounded-2xl relative w-[72.6vw] px-6 md:px-8 pt-6 md:pt-8 pb-4 md:pb-5 text-black border mt-6">

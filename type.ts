@@ -21,7 +21,7 @@ export type answerDetailType = {
   answerId: number;
   user_id: number;
   content: string;
-  created_date: string;
+  createdDate: string;
   likeCnt: number;
   isChosen: boolean;
   imageUrls?: string[];
