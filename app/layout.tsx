@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${pretendard.variable} font-pretendard`}>
+      <body className={`${pretendard.variable} font-pretendard text-black`}>
         <InfoStoreProvider>
           <Header />
           <main className="flex-grow pt-[80px]">{children}</main>
